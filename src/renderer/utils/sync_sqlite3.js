@@ -21,6 +21,19 @@ export default class SyncSqlite3 {
     })
   }
 
+  run(sql, params = []) {
+    return new Promise((resolve, reject) => {
+      this.db.run(sql, params, function (err) {
+        if (err) {
+          console.log(err)
+          reject(err)
+        } else {
+          resolve(this)
+        }
+      })
+    })
+  }
+
   all(sql, params = []) {
     return new Promise((resolve, reject) => {
       this.db.all(sql, params, (err, rows) => {

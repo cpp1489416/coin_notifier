@@ -39,12 +39,12 @@ export const constantRouterMap = [
   {
     path: '/form',
     component: Layout,
-    name: 'Eat,',
+    name: 'Coins',
     children: [
       {
         path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
+        name: 'Coins',
+        component: () => import('@/views/coins/index'),
         meta: { title: '钱', icon: 'form' }
       }
     ]

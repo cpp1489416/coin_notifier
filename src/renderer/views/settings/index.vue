@@ -16,11 +16,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default { 
   computed: {
-    ...mapGetters([
+    ...mapGetters('data', [
       'sqlite3Url', 'cnyPerUsdt'
     ]),
   },
@@ -36,15 +36,28 @@ export default {
     this.reload()
   },
   methods: {
+    ...mapActions('data', [
+      'ReloadData', 'SetSqlite3Url', 'SetCnyPerUsdt'
+    ]),
     reload() {
-      this.$store.dispatch('ReadSettings')
+      this.ReloadData()
       this.form.sqlite3Url = this.sqlite3Url
       this.form.cnyPerUsdt = this.cnyPerUsdt
+      this.$notify({
+        type: 'success',
+        title: 'settings success',
+        message: '加载成功'
+      })
     },
     set() {
-      this.$store.dispatch('SetSqlite3Url', this.form.sqlite3Url)
-      this.$store.dispatch('SetCnyPerUsdt', this.form.cnyPerUsdt)
+      this.SetSqlite3Url(this.form.sqlite3Url)
+      this.SetCnyPerUsdt(this.form.cnyPerUsdt)
       this.reload()
+      this.$notify({
+        type: 'success',
+        title: 'settings success',
+        message: '更新成功'
+      })
     }
   }
 }
